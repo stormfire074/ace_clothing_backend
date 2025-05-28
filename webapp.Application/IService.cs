@@ -10,7 +10,7 @@ namespace webapp.Application
 {
     public interface IService<T> where T : class
     {
-        Task<ListResponse<T>> GetAllAsync(ListRequest<T> request);
+        Task<ListResponse<T>> GetAllAsync(ListRequest request);
         Task<T> GetByIdAsync(int id);
         Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);

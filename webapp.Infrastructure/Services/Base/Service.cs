@@ -25,7 +25,7 @@ namespace webapp.Infrastrcture
             return repository.DeleteAsync(entity);
         }
 
-        public virtual Task<ListResponse<T>> GetAllAsync(ListRequest<T> request)
+        public virtual Task<ListResponse<T>> GetAllAsync(ListRequest request)
         {
             return repository.GetAllAsync(request);
         }

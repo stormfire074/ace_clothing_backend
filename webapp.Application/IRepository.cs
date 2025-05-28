@@ -10,7 +10,7 @@ namespace webapp.Application
 {
     public interface IRepository<T> where T : class, IIdentifiable
     {
-        Task<ListResponse<T>> GetAllAsync(ListRequest<T> request);
+        Task<ListResponse<T>> GetAllAsync(ListRequest request);
         Task<T> GetByIdAsync(int id);
         Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);

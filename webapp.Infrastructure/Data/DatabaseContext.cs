@@ -16,7 +16,6 @@ namespace webapp.Infrastrcture
 
         }
 
-        DbSet<SAPDatabases> SAPDatabases { get; set; }
         DbSet<ExceptionLogs> ExceptionLogs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

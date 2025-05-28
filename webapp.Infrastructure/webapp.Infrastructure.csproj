@@ -24,4 +24,8 @@
     <ProjectReference Include="..\webapp.Application\webapp.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helper\" />
+  </ItemGroup>
+
 </Project>

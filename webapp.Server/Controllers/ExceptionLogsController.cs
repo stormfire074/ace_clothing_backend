@@ -17,7 +17,7 @@ namespace webapp.Server
         }
         [HttpGet]
         [Route("List")]
-        public async Task<ActionResult> List(ListRequest<ExceptionLogs> request)
+        public async Task<ActionResult> List(ListRequest request)
         {
             var response = await this.exceptionLogsService.GetAllAsync(request);
             return Ok(response);

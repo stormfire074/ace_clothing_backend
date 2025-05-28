@@ -3,7 +3,6 @@ using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Extensions.Logging;
 using NLog.Web;
-using SBODeskReact.Infrastrcture.Services;
 using webapp.Application;
 using webapp.Domain;
 using webapp.Infrastrcture;
@@ -68,67 +67,6 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
-
-builder.Services.AddScoped(typeof(ISAPRepository<>), typeof(SAPRepository<>));
-
-builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
-
-builder.Services.AddScoped<IRepository<SAPDatabases>, Repository<SAPDatabases>>();
-
-builder.Services.AddScoped<IService<SAPDatabases>, SAPDatabaseService>();
-
-builder.Services.AddScoped<ISAPRepository<BusinessPartner>, SAPRepository<BusinessPartner>>();
-
-builder.Services.AddScoped<ISAPService<BusinessPartner>, BusinessPartnerService>();
-
-builder.Services.AddScoped<IServiceLayerService, ServiceLayerService>();
-
-
-
-builder.Services.AddScoped<ISLConnectionFactory>(serviceProvider =>
-{
-    var connectionInfos = new List<webapp.Domain.ConnectionInfo>();
-    using (var scope = serviceProvider.CreateScope())
-    {
-        var databases = scope.ServiceProvider.GetRequiredService<IService<SAPDatabases>>();
-        // Synchronously fetching data; consider redesigning if possible
-        var databaseList = databases.GetAllAsync().GetAwaiter().GetResult();
-        if (databaseList.Count() > 0)
-        {
-            foreach (var database in databaseList)
-            {
-                if (database != null)
-                {
-                    connectionInfos.Add(new webapp.Domain.ConnectionInfo
-                    {
-                        Name = database?.CompanyDB ?? "",
-                        Database = database?.CompanyDB ?? "",
-                        Url = database?.ServiceLayerURL ?? "",
-                        Username = database?.SAPUsername ?? "",
-                        Password = database?.SAPPassword ?? ""
-                    });
-                }
-
-            }
-        }
-        else
-        {
-            connectionInfos.Add(new webapp.Domain.ConnectionInfo
-            {
-                Name = "Global_Test",
-                Database = "Global_Test",
-                Url = "https://abit.bot:50000/b1s/v2",
-                Username = "manager",
-                Password = "P@ssw0rd"
-            });
-
-        }
-
-    }
-    return new SLConnectionFactory(connectionInfos);
-});
-
-
 
 builder.Services.AddCors(options =>
 {

@@ -43,7 +43,7 @@ namespace webapp.Infrastructure
             }
         }
 
-        public async Task<ListResponse<T>> GetAllAsync(ListRequest<T> request)
+        public async Task<ListResponse<T>> GetAllAsync(ListRequest request)
         {
             var query = _dbcontext.Set<T>().AsQueryable()
                 .Skip(request.Skip).Take(request.Take);
