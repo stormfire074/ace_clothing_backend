@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 using webapp.Application;
-using webapp.Domain;
 
-namespace webapp.Server
+namespace Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

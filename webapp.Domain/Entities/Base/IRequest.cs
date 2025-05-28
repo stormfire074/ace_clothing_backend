@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace webapp.Domain
+namespace Domain.Entities
 {
     public interface ISaveRequest
     {
@@ -26,6 +26,7 @@ namespace webapp.Domain
 
     public class ListRequest
     {
+        public ListRequest() { }
         public ListRequest(int pageNumber,int pageSize)
         {
             PageNumber = pageNumber;

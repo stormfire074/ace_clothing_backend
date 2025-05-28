@@ -1,7 +1,7 @@
 ﻿using Azure;
+using Domain.Entities;
 using System.Linq.Expressions;
 using webapp.Application;
-using webapp.Domain;
 
 namespace webapp.Infrastrcture
 {
@@ -45,7 +45,10 @@ namespace webapp.Infrastrcture
             return repository.UpdateAsync(entity);
         }
 
-
+        Task<DeleteReponse> IService<T>.DeleteAsync(T entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

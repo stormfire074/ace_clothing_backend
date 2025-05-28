@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace webapp.Domain
+namespace Domain.Entities
 {
     public interface IIdentifiable
     {
-        int Id { get; set; }
+        Guid Id { get; set; }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace webapp.Domain
+namespace Domain.Entities
 {
     public class ExceptionLogs : IIdentifiable
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public DateTime Logged { get; set; }

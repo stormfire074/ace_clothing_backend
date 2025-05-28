@@ -63,5 +63,11 @@ namespace webapp.SharedServices
             catch { return cipherText; }
 
         }
+
+        public static string GeneratePasswordHash(this string Password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(Password);
+        }
+       
     }
 }

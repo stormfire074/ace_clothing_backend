@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace webapp.Domain
+namespace Domain.Entities
 {
     public class Error
     {

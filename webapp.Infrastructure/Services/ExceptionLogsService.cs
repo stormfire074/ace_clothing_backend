@@ -1,5 +1,5 @@
-﻿using webapp.Application;
-using webapp.Domain;
+﻿using Domain.Entities;
+using webapp.Application;
 namespace webapp.Infrastrcture
 {
     public class ExceptionLogsService : Service<ExceptionLogs>
