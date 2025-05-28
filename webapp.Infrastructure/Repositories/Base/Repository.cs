@@ -1,12 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using webapp.Application;
 using webapp.Infrastrcture;
 
@@ -21,11 +15,22 @@ namespace webapp.Infrastructure
             this._dbcontext = dbcontext;
         }
 
-        public async Task<T> AddAsync(T entity)
+        public async Task<bool> AddAsync(T entity)
         {
-            await _dbcontext.Set<T>().AddAsync(entity);
-            await _dbcontext.SaveChangesAsync();
-            return entity;
+            var flag = false;
+            try
+            {
+                await _dbcontext.Set<T>().AddAsync(entity);
+                await _dbcontext.SaveChangesAsync();
+                flag = true;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
+
+            return flag;
         }
 
         public async Task<DeleteReponse> DeleteAsync(T entity)
@@ -50,7 +55,7 @@ namespace webapp.Infrastructure
 
             var totalCount = await query.CountAsync();
             var items = await query.ToListAsync();
-            return new ListResponse<T>
+            return new ListResponse<T>(request: request)
             {
                 Entities = items,
                 TotalCount = totalCount
@@ -58,7 +63,7 @@ namespace webapp.Infrastructure
 
         }
 
-        
+
 
         public async Task<T> GetByFieldNameAsync(Expression<Func<T, bool>> predicate)
         {
@@ -70,23 +75,37 @@ namespace webapp.Infrastructure
             return await _dbcontext.Set<T>().FindAsync(id);
         }
 
-        public async Task UpdateAsync(T entityToUpdate)
+        public async Task<bool> UpdateAsync(T entityToUpdate)
         {
+            var flag = false;
             // Retrieves the entity using the ID to ensure it exists in the database
-            var entity = await _dbcontext.Set<T>().FindAsync(entityToUpdate.Id);
-            if (entity == null)
+            try
             {
-                throw new ArgumentException("Entity not found.");
+                var entity = await _dbcontext.Set<T>().FindAsync(entityToUpdate.Id);
+                if (entity == null)
+                {
+                    throw new ArgumentException("Entity not found.");
+                }
+
+                // Maps the updated values to the tracked entity
+                _dbcontext.Entry(entity).CurrentValues.SetValues(entityToUpdate);
+
+                // Marks the entity as modified
+                _dbcontext.Entry(entity).State = EntityState.Modified;
+
+                // Saves changes asynchronously
+                await _dbcontext.SaveChangesAsync();
+
+                flag = true;
             }
+            catch (Exception ex)
+            {
 
-            // Maps the updated values to the tracked entity
-            _dbcontext.Entry(entity).CurrentValues.SetValues(entityToUpdate);
+                throw;
+            }
+            return flag;
 
-            // Marks the entity as modified
-            _dbcontext.Entry(entity).State = EntityState.Modified;
 
-            // Saves changes asynchronously
-            await _dbcontext.SaveChangesAsync();
         }
     }
 }

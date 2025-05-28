@@ -7,8 +7,8 @@ namespace webapp.Application
     {
         Task<ListResponse<T>> GetAllAsync(ListRequest request);
         Task<T> GetByIdAsync(int id);
-        Task<T> AddAsync(T entity);
-        Task UpdateAsync(T entity);
+        Task<bool> AddAsync(T entity);
+        Task<bool> UpdateAsync(T entity);
         Task<DeleteReponse> DeleteAsync(T entity);
         Task<T> GetByFieldNameAsync(Expression<Func<T, bool>> predicate);
     }

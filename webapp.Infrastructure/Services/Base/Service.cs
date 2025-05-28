@@ -1,5 +1,4 @@
-﻿using Azure;
-using Domain.Entities;
+﻿using Domain.Entities;
 using System.Linq.Expressions;
 using webapp.Application;
 
@@ -14,41 +13,41 @@ namespace webapp.Infrastrcture
             this.repository = repository;
         }
 
-        public virtual Task<T> AddAsync(T entity)
+        public virtual async Task<SaveResponse> AddAsync(T entity)
         {
-            var res = repository.AddAsync(entity);
-            return repository.GetByIdAsync(res.Id);
+            var res = await repository.AddAsync(entity);
+            return new SaveResponse(isSaved: res);
         }
 
-        public virtual Task<DeleteReponse> DeleteAsync(T entity)
+        public virtual async Task<DeleteReponse> DeleteAsync(T entity)
         {
-            return repository.DeleteAsync(entity);
+            return await repository.DeleteAsync(entity);
         }
 
-        public virtual Task<ListResponse<T>> GetAllAsync(ListRequest request)
+        public virtual async Task<ListResponse<T>> GetAllAsync(ListRequest request)
         {
-            return repository.GetAllAsync(request);
+            return await repository.GetAllAsync(request);
         }
 
-        public async Task<T> GetByFieldNameAsync(Expression<Func<T, bool>> predicate)
+        public virtual async Task<RetrieveResponse<T>> GetByFieldNameAsync(Expression<Func<T, bool>> predicate)
         {
-            return await repository.GetByFieldNameAsync(predicate);
+            var response = await repository.GetByFieldNameAsync(predicate);
+            return new RetrieveResponse<T>(response);
         }
 
-        public virtual Task<T> GetByIdAsync(int id)
+        public virtual async Task<RetrieveResponse<T>> GetByIdAsync(int id)
         {
-            return repository.GetByIdAsync(id);
+            var response = await repository.GetByIdAsync(id);
+            return new RetrieveResponse<T>(response);
         }
 
-        public virtual Task UpdateAsync(T entity)
+        public virtual async Task<SaveResponse> UpdateAsync(T entity)
         {
-            return repository.UpdateAsync(entity);
+            var response = await repository.UpdateAsync(entity);
+            return new SaveResponse(isSaved: response);
         }
 
-        Task<DeleteReponse> IService<T>.DeleteAsync(T entity)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 
 }

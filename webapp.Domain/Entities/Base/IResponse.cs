@@ -19,9 +19,9 @@ namespace Domain.Entities
     }
     public class SaveResponse : ServiceResponse
     {
-        public SaveResponse(object entity=null, Exception exception = null)
+        public SaveResponse(bool isSaved = false, Exception exception = null)
         {
-            EntityId = entity;
+            IsSuccess = isSaved;
             if (exception != null)
             {
                 Error = new Error(exception);
@@ -29,7 +29,7 @@ namespace Domain.Entities
 
         }
 
-        public object EntityId;
+        public bool IsSuccess { get; set; }
 
     }
     public interface IListResponse
