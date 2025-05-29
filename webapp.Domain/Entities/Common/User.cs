@@ -26,7 +26,6 @@ namespace Domain.Entities
         [Required] public string PasswordHash { get; set; }
         [Required] public string DisplayName { get; set; }
         public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
-
     }
 
     public class User_AddEdit : LogFields

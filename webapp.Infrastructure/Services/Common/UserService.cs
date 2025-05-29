@@ -12,7 +12,6 @@ namespace Infrastructure.Services
         {
             this._dbContext = _dbContext;
         }
-
         public async Task<SaveResponse> AddUser(User_AddEdit request)
         {
             if (_dbContext.Users.Any(u => u.Email == request.Email))
@@ -29,7 +28,6 @@ namespace Infrastructure.Services
             }
             return await base.AddAsync(entity);
         }
-
         public async Task<ListResponse<User_Listing>> ListUsers(ListRequest request)
         {
             var query = _dbContext.Set<User>().AsQueryable()

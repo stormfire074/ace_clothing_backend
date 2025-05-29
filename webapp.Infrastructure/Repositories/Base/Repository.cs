@@ -10,9 +10,9 @@ namespace webapp.Infrastructure
     {
         protected readonly DatabaseContext _dbcontext;
 
-        public Repository(DatabaseContext dbcontext)
+        public Repository(DatabaseContext _dbcontext)
         {
-            this._dbcontext = dbcontext;
+            this._dbcontext = _dbcontext;
         }
 
         public async Task<bool> AddAsync(T entity)
