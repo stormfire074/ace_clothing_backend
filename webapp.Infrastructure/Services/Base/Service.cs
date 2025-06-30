@@ -19,7 +19,7 @@ namespace webapp.Infrastrcture
             return new SaveResponse(isSaved: res);
         }
 
-        public virtual async Task<DeleteReponse> DeleteAsync(T entity)
+        public virtual async Task<DeleteReponse> DeleteAsync(Guid entity)
         {
             return await repository.DeleteAsync(entity);
         }
@@ -35,7 +35,7 @@ namespace webapp.Infrastrcture
             return new RetrieveResponse<T>(response);
         }
 
-        public virtual async Task<RetrieveResponse<T>> GetByIdAsync(int id)
+        public virtual async Task<RetrieveResponse<T>> GetByIdAsync(Guid id)
         {
             var response = await repository.GetByIdAsync(id);
             return new RetrieveResponse<T>(response);

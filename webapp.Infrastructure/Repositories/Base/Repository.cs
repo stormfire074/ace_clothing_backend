@@ -28,16 +28,16 @@ namespace webapp.Infrastructure
             {
                 throw;
             }
-            
+
 
             return flag;
         }
 
-        public async Task<DeleteReponse> DeleteAsync(T entity)
+        public async Task<DeleteReponse> DeleteAsync(Guid entity)
         {
             try
             {
-                _dbcontext.Set<T>().Remove(entity);
+                await _dbcontext.Set<T>().Where(x => x.Id == entity).ExecuteDeleteAsync();
                 await _dbcontext.SaveChangesAsync();
                 return new DeleteReponse(true);
             }
@@ -70,9 +70,9 @@ namespace webapp.Infrastructure
             return await _dbcontext?.Set<T>().FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(Guid id)
         {
-            return await _dbcontext.Set<T>().FindAsync(id);
+            return await _dbcontext.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<bool> UpdateAsync(T entityToUpdate)

@@ -11,10 +11,10 @@ namespace webapp.Application
     public interface IService<T> where T : class
     {
         Task<ListResponse<T>> GetAllAsync(ListRequest request);
-        Task<RetrieveResponse<T>> GetByIdAsync(int id);
+        Task<RetrieveResponse<T>> GetByIdAsync(Guid id);
         Task<SaveResponse> AddAsync(T entity);
         Task<SaveResponse> UpdateAsync(T entity);
-        Task<DeleteReponse> DeleteAsync(T entity);
+        Task<DeleteReponse> DeleteAsync(Guid id);
         Task<RetrieveResponse<T>> GetByFieldNameAsync(Expression<Func<T, bool>> predicate);
 
     }

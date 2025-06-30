@@ -7,6 +7,7 @@ using NLog;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using System.Text;
+using System.Text.Json.Serialization;
 using webapp.Application;
 using webapp.Infrastrcture;
 using webapp.Infrastructure;
@@ -33,7 +34,10 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddAuthorization();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {

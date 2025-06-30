@@ -10,7 +10,7 @@ namespace Domain.Entities
         public User() { }
         public User(User_AddEdit addedit) 
         {
-            this.Id = Guid.NewGuid();
+            this.Id =addedit.Id ?? Guid.NewGuid();
             this.Email = addedit.Email;
             this.FirstName = addedit.FirstName;
             this.LastName = addedit.LastName;
@@ -35,9 +35,15 @@ namespace Domain.Entities
         [Required] public string LastName { get; set; }
 
         [Required] public string Email { get; set; }
-        [Required] public string Password { get; set; }
+        public string? Password { get; set; }
 
         public ICollection<string> UserRoles { get; set; }
+
+        public string GetDisplayName()
+        {
+            return $@"{this.FirstName} {this.LastName}";
+
+        }
 
     }
     public class User_Listing

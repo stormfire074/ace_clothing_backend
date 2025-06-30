@@ -9,6 +9,7 @@ using Domain.Entities;
 using webapp.SharedServices;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Text.Json;
 
 namespace Server.Controllers
 {
@@ -59,10 +60,13 @@ namespace Server.Controllers
                 return Unauthorized();
 
             var claims = new List<Claim> { 
-                new Claim(ClaimTypes.Name, user.Email),
-                new Claim(ClaimTypes.Role, string.Join(',',user.UserRoles.Select(x=>x.Role.Name))),
+                new Claim("name", user.Email),
                 new Claim("displayName",user.DisplayName)
             };
+            foreach (var role in user.UserRoles.Select(x => x.Role.Name))
+            {
+                claims.Add(new Claim("roles", role));
+            }
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var token = new JwtSecurityToken(
                 issuer: _config["Jwt:Issuer"],
